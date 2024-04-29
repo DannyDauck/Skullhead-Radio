@@ -6,5 +6,8 @@
     <color name="bg_overlay">#55ffffff</color>
     <color name="txt_color">#FFFFFF</color>
     <color name="secondary">#00CCFF</color>
+    <color name="smooth_gold">#da9b25</color>
+    <color name="active">#FFEB3B</color>
+    <color name="container_bg">#99FFFFFF</color>
 
 </resources>

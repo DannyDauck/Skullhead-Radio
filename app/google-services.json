@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456834036997",
+    "project_id": "skullhead-radio",
+    "storage_bucket": "skullhead-radio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456834036997:android:b608ed90cb56ecaaa5336c",
+        "android_client_info": {
+          "package_name": "com.example.skullheadradio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkOsyBedW77XmHj2heKWAUHWariumSDgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
