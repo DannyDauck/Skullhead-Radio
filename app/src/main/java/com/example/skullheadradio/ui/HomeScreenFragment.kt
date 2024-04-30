@@ -6,27 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.skullheadradio.R
 import com.example.skullheadradio.databinding.FragmentHomeScreenBinding
+import com.example.skullheadradio.viewmodel.MainViewModel
 import java.io.IOException
 
 class HomeScreenFragment: Fragment() {
 
     private lateinit var bnd: FragmentHomeScreenBinding
     private var player: MediaPlayer? = null
+    private val vm: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("HomeView onCreate")
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         bnd = FragmentHomeScreenBinding.inflate(inflater, container, false)
+        vm.getAllGenres()
         return bnd.root
     }
 

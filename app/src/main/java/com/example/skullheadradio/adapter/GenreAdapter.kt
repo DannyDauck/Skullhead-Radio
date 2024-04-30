@@ -38,12 +38,12 @@ class GenreAdapter(
         holder.bnd.genreItemName.text = item.name
         holder.bnd.root.setOnClickListener {
             vm.toggleGenre(item)
-            update(data)
+            update()
         }
     }
 
-    fun update(newData: List<Genre>){
-        data = newData
+    fun update(){
+        data = data
         notifyDataSetChanged()
     }
 }

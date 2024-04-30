@@ -1,6 +1,10 @@
 package com.example.skullheadradio.viewmodel
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.app.Application
+import android.media.MediaPlayer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +14,15 @@ import com.example.skullheadradio.datamodels.Genre
 import com.example.skullheadradio.datamodels.Song
 import com.example.skullheadradio.datamodels.Station
 import com.example.skullheadradio.remote.LautFmApiService
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private var repo: AppRepository = AppRepository(LautFmApiService.LautFmApi)
+    private var player = MediaPlayer()
+
+    var volume: Float = 0.8F
 
     val stations: LiveData<List<Station>>
         get() = repo.stations
@@ -22,11 +30,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentSong: LiveData<Song?>
         get() = repo.currentSong
 
+    private var _currentStation = MutableLiveData<Station?>()
     val currentStation: LiveData<Station?>
-        get() = repo.currentStation
+        get() = _currentStation
 
     val genres: List<Genre>
         get() = repo.genres
+    val isPlayingRadio: Boolean
+        get() = player.isPlaying
 
     private var _currentGenres = MutableLiveData<List<Genre>>()
     val currentGenres: LiveData<List<Genre>>
@@ -36,11 +47,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentStations: LiveData<List<Station>>
         get() = _currentStationList
 
-    init {
-        viewModelScope.launch {
-            repo.getAllGenres()
-        }
-    }
 
     fun getStationsByGenre(genre: String) {
         viewModelScope.launch {
@@ -51,11 +57,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun toggleGenre(genre: Genre) {
         if (_currentGenres.value?.contains(genre) == true) {
             _currentGenres.value = _currentGenres.value?.filter { it != genre }
-            _currentStationList.value?.forEach {station: Station ->
-                station.genres.forEach{genrename: String ->
+            _currentStationList.value?.forEach { station: Station ->
+                station.genres.forEach { genrename: String ->
                     if (!_currentGenres.value!!.filter { genre: Genre ->
-                        genre.name == genrename
-                        }.isEmpty()){
+                            genre.name == genrename
+                        }.isEmpty()) {
                         _currentStationList.value = _currentStationList.value?.filter {
                             it != station
                         }
@@ -63,9 +69,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         } else {
+            if (_currentGenres.value != null) {
+                _currentGenres.value = _currentGenres.value!!.plus(genre)
+            } else {
+                listOf(genre).also { this._currentGenres.value = it }
+            }
             viewModelScope.launch {
-
                 repo.getStationsByGenre(genre.name)
+                delay(1500)
 
                 val currentStationsValue = _currentStationList.value ?: emptyList<Station>()
                 val newStations: List<Station> =
@@ -73,20 +84,67 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         station !in currentStationsValue
                     }
                 _currentStationList.value = newStations
+                println("vm: stations found: " + _currentStationList.value?.size.toString())
+                _currentStationList.value = listOf<Station>() + newStations
 
             }
         }
     }
 
+    fun getAllGenres() {
+        viewModelScope.launch {
+            repo.getAllGenres()
+        }
+    }
 
-    companion object {
-        @Volatile
-        private var instance: MainViewModel? = null
+    fun setStation(station: Station){
+        if(_currentStation.value!=null){
+            repo.lastStation = _currentStation.value
+        }
+        _currentStation.value = station
+    }
 
-        fun getInstance(application: Application): MainViewModel {
-            return instance ?: synchronized(this) {
-                instance ?: MainViewModel(application).also { instance = it }
+    fun play(){
+        if (player.isPlaying) {
+            pause()
+        }
+        val volumeAnimator = ValueAnimator.ofFloat(volume, 0.0f)
+        volumeAnimator.duration = 1000
+        volumeAnimator.addUpdateListener { animator ->
+            val newVolume = animator.animatedValue as Float
+            player.setVolume(newVolume, newVolume)
+        }
+        try{
+            player.reset()
+            player.setVolume(0f, 0f)
+            player.setDataSource("https://stream.laut.fm/" + currentStation.value!!.name.lowercase())
+            player.prepare()
+            player.start()
+            volumeAnimator.start()
+        }catch (e: Exception){
+            println(e.stackTrace)
+        }
+
+    }
+
+    fun pause() {
+        player?.let { currentPlayer ->
+            if (currentPlayer.isPlaying) {
+                val volumeAnimator = ValueAnimator.ofFloat(volume, 0.0f)
+                volumeAnimator.duration = 1000
+                volumeAnimator.addUpdateListener { animator ->
+                    val newVolume = animator.animatedValue as Float
+                    currentPlayer.setVolume(newVolume, newVolume)
+                }
+                volumeAnimator.start()
+                volumeAnimator.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        currentPlayer.pause()
+                    }
+                })
             }
         }
     }
+
+
 }

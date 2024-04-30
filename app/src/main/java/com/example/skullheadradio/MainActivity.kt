@@ -2,6 +2,7 @@ package com.example.skullheadradio
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.example.skullheadradio.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {

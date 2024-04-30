@@ -13,6 +13,7 @@ class AppRepository(
     var genres: List<Genre> = listOf()
 
 ) {
+    var lastStation: Station? = null
 
     private var _currentSong = MutableLiveData<Song?>()
     val currentSong: LiveData<Song?>
@@ -28,21 +29,35 @@ class AppRepository(
 
     suspend fun getStationsByGenre(genre: String){
         try {
-            _stations.value =  lautFmApi.retrofitService.getStationsByGenre(genre)
+            val response = lautFmApi.retrofitService.getStationsByGenre("rock", null, 40)
+            if (response.isSuccessful) {
+                try {
+                    _stations.value = response.body()
+                }catch (e: Exception){
+                    println(e)
+                    println(response.body())
+                }
+
+            } else {
+                // Hier kannst du den Fehler behandeln, z.B. basierend auf dem Statuscode
+                val errorCode = response.code()
+                val errorMessage = response.message()
+                println("API response: " + errorCode.toString() + ": " + errorMessage)
+            }
         }catch (e: Exception){
-            println(e.stackTrace)
-            _stations.value = listOf()
+            println(e)
         }
     }
 
-    suspend fun setStation(station: String){
-        try{
-            _currentStation.value = lautFmApi.retrofitService.getStation(station)
+    suspend fun getStationImage(stationName: String): String {
+        try {
+            return lautFmApi.retrofitService.getImage(stationName.lowercase(), type = "station_80x80")
         }catch (e: Exception){
-            println("Could not set station")
-            println(e.stackTrace)
+            println(e)
+            return ""
         }
     }
+
 
     suspend fun getAllGenres(){
         try {
@@ -51,5 +66,4 @@ class AppRepository(
             println("Could not fetch genres")
         }
     }
-
 }

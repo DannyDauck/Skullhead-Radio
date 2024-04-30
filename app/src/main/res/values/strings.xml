@@ -6,4 +6,6 @@
     <string name="no_station_is_playing">no station is playing</string>
     <string name="select_genres">Select genres</string>
     <string name="close">close</string>
+    <string name="genre">genre</string>
+    <string name="name">name</string>
 </resources>
