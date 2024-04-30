@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchScreenFragment"
-        android:name="com.example.skullheadradio.ui.SearchScreenFragment"
+        android:name="com.example.skullheadradio.ui.searchscreen.SearchScreenFragment"
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" >
         <action

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.example.skullheadradio.R
 import com.example.skullheadradio.adapter.GenreAdapter.*
 import com.example.skullheadradio.databinding.GenreItemBinding
 import com.example.skullheadradio.datamodels.Genre
@@ -28,9 +29,21 @@ class GenreAdapter(
     }
 
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
-        holder.bnd.genreItemName.text = data[position].name
-        holder.bnd.root.setOnClickListener {
-
+        var item = data[position]
+        if (vm.currentGenres.value?.contains(item)==true){
+            holder.bnd.genreItemName.setBackgroundResource(R.drawable.genre_item_bg_selected)
+        }else{
+            holder.bnd.genreItemName.setBackgroundResource(R.drawable.genre_item_bg)
         }
+        holder.bnd.genreItemName.text = item.name
+        holder.bnd.root.setOnClickListener {
+            vm.toggleGenre(item)
+            update(data)
+        }
+    }
+
+    fun update(newData: List<Genre>){
+        data = newData
+        notifyDataSetChanged()
     }
 }
