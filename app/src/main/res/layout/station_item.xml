@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#66ffffff">
+        android:background="#88ffffff">
         <ImageView
             android:id="@+id/station_item_station_lable"
             android:layout_width="80dp"
@@ -24,9 +24,9 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/radio"
-            app:tint="#888888" />
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,20 +36,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="station name"
-                android:textSize="22dp"
+                android:layout_marginEnd="88dp"
+                android:lines="1"
+                android:textSize="24dp"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/station_item_station_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="station name"
-                android:textSize="16dp"
-                android:textStyle="bold"/>
+                android:text="station location"
+                android:textSize="18dp"
+                android:lines="1"
+                android:textStyle="bold"
+                android:layout_marginEnd="88dp"/>
             <TextView
                 android:id="@+id/station_item_station_genres"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="station genres"
+                android:lines="1"
+                android:layout_marginEnd="88dp"
                 android:textSize="16dp"
                 android:textStyle="normal"/>
         </LinearLayout>

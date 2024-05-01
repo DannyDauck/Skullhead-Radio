@@ -1,4 +1,4 @@
-package com.example.skullheadradio.ui.searchscreen
+package com.example.skullheadradio.ui
 
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -13,6 +13,7 @@ import com.example.skullheadradio.adapter.GenreAdapter
 import com.example.skullheadradio.adapter.StationAdapter
 import com.example.skullheadradio.databinding.FragmentSearchScreenBinding
 import com.example.skullheadradio.viewmodel.MainViewModel
+import androidx.core.widget.addTextChangedListener
 
 class SearchScreenFragment() : Fragment() {
 
@@ -83,8 +84,10 @@ class SearchScreenFragment() : Fragment() {
 
         vm.currentStations.observe(viewLifecycleOwner){
             println("change was recognized")
+            println(vm.currentGenres.value.toString())
             if(vm.currentStations.value.isNullOrEmpty()){
                 bnd.searchScreenNoResultText.isVisible = true
+                stationAdapter.update()
             }else{
                 bnd.searchScreenNoResultText.isVisible = false
                 stationAdapter.update()
@@ -97,5 +100,9 @@ class SearchScreenFragment() : Fragment() {
             stationAdapter.update()
         }
 
+        bnd.itGenreSearch.addTextChangedListener{
+            vm.genreFilterString = bnd.itGenreSearch.text.toString()
+            adapter.update()
+        }
     }
 }

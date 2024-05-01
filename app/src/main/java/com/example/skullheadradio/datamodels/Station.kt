@@ -5,6 +5,7 @@ import retrofit2.http.GET as GET
 
 data class Station(
     val name: String,
+    val display_name: String,
     val format: String,
     val description: String,
     val djs: String,

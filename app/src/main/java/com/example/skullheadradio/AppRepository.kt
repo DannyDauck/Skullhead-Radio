@@ -29,7 +29,7 @@ class AppRepository(
 
     suspend fun getStationsByGenre(genre: String){
         try {
-            val response = lautFmApi.retrofitService.getStationsByGenre("rock", null, 40)
+            val response = lautFmApi.retrofitService.getStationsByGenre(genre.lowercase(), null, 40)
             if (response.isSuccessful) {
                 try {
                     _stations.value = response.body()

@@ -43,7 +43,9 @@ class GenreAdapter(
     }
 
     fun update(){
-        data = data
+        data = vm.allGenres.filter{
+            it.name.lowercase().contains(vm.genreFilterString.lowercase())
+        } ?: data
         notifyDataSetChanged()
     }
 }
