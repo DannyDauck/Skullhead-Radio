@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Skullhead Radio</string>
+    <string name="hello_blank_fragment">Hallo leeres Fragment</string>
+    <string name="no_station_is_playing">Es wird keine Station abgespielt</string>
+    <string name="select_genres">Wähle ein Genre</string>
+    <string name="close">schließen</string>
+    <string name="genre">Genre</string>
+    <string name="name">Name</string>
+    <string name="no_station_selected">Keine Station ausgewählt</string>
+    <string name="now_playing">"es läuft:    "</string>
+    <string name="search_station">Sender suchen</string>
+    <string name="genres">Genres</string>
+    <string name="next_artist">"danach:    "</string>
+</resources>

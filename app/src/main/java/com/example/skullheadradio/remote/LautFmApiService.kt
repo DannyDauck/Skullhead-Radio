@@ -2,7 +2,9 @@ package com.example.skullheadradio.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.skullheadradio.datamodels.Artist
 import com.example.skullheadradio.datamodels.Genre
+import com.example.skullheadradio.datamodels.NextArtist
 import com.example.skullheadradio.datamodels.Song
 import com.example.skullheadradio.datamodels.Station
 import com.squareup.moshi.Moshi
@@ -34,7 +36,10 @@ interface LautFmApiService {
     suspend fun getAllGenres(): List<Genre>
 
     @GET("/station/{name}/current_song")
-    suspend fun getCurrentSong(station: String): LiveData<Song>
+    suspend fun getCurrentSong(@Path("name")station: String): Song
+
+    @GET("/station/{name}/next_artists")
+    suspend fun getNextArtists(@Path("name")station: String): List<NextArtist>
 
     @GET("/stations/genre/{genre}")
     suspend fun getStationsByGenre(
@@ -46,10 +51,6 @@ interface LautFmApiService {
         @Query("lng") lng: Double? = null,
         @Header("If-Modified-Since") ifModifiedSince: String? = null
     ): Response<List<Station>>
-
-    @GET("/station/{station}/images/{type}")
-    suspend fun getImage(station: String, type: String = "station"): String
-
 
 
     object LautFmApi {

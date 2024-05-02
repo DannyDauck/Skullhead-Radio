@@ -52,7 +52,7 @@ class SearchScreenFragment() : Fragment() {
         }
 
         bnd.searchScreenBtnGenre.setOnClickListener {
-            //Spinner ein und ausfahren
+            //move spinner
             bnd.searchScreenGenreContainer.animate()
                 .translationX(0f)
                 .setDuration(500)
@@ -60,6 +60,7 @@ class SearchScreenFragment() : Fragment() {
             bnd.searchScreenCloseBigBtn.animate()
                 .translationX(0f)
                 .setDuration(500)
+            println("all genres: " + vm.allGenres)
         }
 
         bnd.searchScreenCloseBigBtn.setOnClickListener {

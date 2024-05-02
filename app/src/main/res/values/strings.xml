@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Skullhead Radio</string>
-    <string name="skullhead_radio">Skullhead Radio</string>
+    <string name="app_name" translatable="false">Skullhead Radio</string>
+    <string name="skullhead_radio" translatable="false">Skullhead Radio</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_station_is_playing">no station is playing</string>
@@ -8,4 +8,9 @@
     <string name="close">close</string>
     <string name="genre">genre</string>
     <string name="name">name</string>
+    <string name="no_station_selected">no station selected</string>
+    <string name="now_playing">"now playing: "</string>
+    <string name="search_station">Search station</string>
+    <string name="genres">Genres</string>
+    <string name="next_artist">"next artist:  "</string>
 </resources>

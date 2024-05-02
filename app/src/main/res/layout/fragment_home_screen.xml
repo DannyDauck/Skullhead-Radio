@@ -42,58 +42,251 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:id="@+id/home_screen_station_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/home_bottom_nav">
-        <ImageView
-            android:id="@+id/home_play"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/play"
-            android:layout_marginBottom="30dp"
-            />
-        <ImageView
-            android:id="@+id/home_stop"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/stop"
-            android:layout_marginBottom="30dp"/>
+        app:layout_constraintTop_toBottomOf="@id/homeTopbar"
+        app:layout_constraintBottom_toTopOf="@id/home_bottom_nav">
+
+        <TextView
+            android:id="@+id/marquee_text"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/marque_txt_bg"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:fontFamily="@font/black_ops_one"
+            android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="8dp"
+            android:scrollHorizontally="true"
+            android:layout_margin="20dp"
+            android:singleLine="true"
+            android:text="no radio is playing"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore=",HardcodedText,TextSizeCheck"
+            app:layout_constraintTop_toBottomOf="@id/homeTopbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="8dp">
+            <ImageView
+                android:id="@+id/home_screen_station_image"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/rastafariskullhead" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/home_screen_stationname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textAlignment="textStart"
+                    android:fontFamily="@font/black_ops_one"
+                    android:textColor="@color/black"
+                    android:text="Station name station name"
+                    android:background="#99FFFFFF"
+                    android:paddingStart="8dp"
+                    android:lines="2"
+                    tools:ignore="hardcoded text"/>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+                <TextView
+                    android:id="@+id/home_screen_station_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="station location station location"
+                    android:fontFamily="@font/black_ops_one"
+                    android:textSize="20sp"
+                    android:background="#66FFFFFF"
+                    android:lines="2"
+                    android:paddingStart="8dp"/>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/genres"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/black_ops_one"
+                    android:paddingStart="8dp"
+                    android:background="#66FFFFFF"/>
+
+                <TextView
+                    android:id="@+id/home_screen_station_genres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="#66FFFFFF"
+                    android:paddingStart="8dp"
+                    android:paddingBottom="4dp"
+                    android:lines="3"
+                    android:text="station genres genres genres genres genres genres genres genres genres"
+                    tools:ignore="hardcoded text"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/home_screen_playlistcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#77FFFFFF"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+            <TextView
+                android:id="@+id/home_screen_playlistname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="current playlist"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="8dp"/>
+
+            <TextView
+                android:id="@+id/home_screen_playlist_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="current playlist description"
+                android:textSize="20sp"
+                android:paddingStart="8dp"
+                android:layout_marginBottom="4dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="8dp">
+            <TextView
+                android:id="@+id/home_screen_current_song_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="currentSong"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:paddingStart="8dp"
+                android:background="#77FFFFFF"/>
+            <TextView
+                android:id="@+id/home_screen_current_song_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="current_song_artist"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="8dp"
+                android:background="#77FFFFFF"
+                tools:ignore="hardcoded text"/>
+            <TextView
+                android:id="@+id/home_screen_current_song_album"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="current_song_album"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="8dp"
+                android:background="#77FFFFFF"
+                tools:ignore="hardcoded text"/>
+            <TextView
+                android:id="@+id/home_screen_current_song_release_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="current_song_release_year"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingStart="8dp"
+                android:background="#77FFFFFF"
+                tools:ignore="hardcoded text"/>
+
+            <SeekBar
+                android:id="@+id/home_screen_current_song_progress"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:background="#77FFFFFF"
+                android:thumb="@drawable/song_progress_thumb"
+                android:progress="50"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/home_screen_current_song_elapsed_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="elapsed time"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"
+                    android:background="#77FFFFFF"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/home_screen_current_song_remain_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="remain time"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:background="#77FFFFFF"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/marquee_text"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="2"
-        android:background="@drawable/marque_txt_bg"
-        android:ellipsize="marquee"
-        android:focusable="true"
+        android:id="@+id/home_screen_no_radio_selected_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/black_ops_one"
-        android:gravity="center_vertical"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="8dp"
-        android:scrollHorizontally="true"
-        android:layout_margin="20dp"
-        android:singleLine="true"
-        android:text="no radio is playing"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        tools:ignore=",HardcodedText,TextSizeCheck"
-        app:layout_constraintTop_toBottomOf="@id/homeTopbar"
+        android:text="@string/no_station_selected"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/home_bottom_nav"

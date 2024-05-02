@@ -8,6 +8,7 @@ data class Station(
     val display_name: String,
     val format: String,
     val description: String,
+    val current_playlist: Playlist?,
     val djs: String,
     val location: String,
     val lat: Double?,

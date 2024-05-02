@@ -1,7 +1,6 @@
 package com.example.skullheadradio.datamodels
 
-import com.google.gson.annotations.SerializedName
-
-data class Artist(
+data class Playlist(
     val name: String,
+    val description: String?
 )

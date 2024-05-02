@@ -83,7 +83,7 @@
         android:fontFamily="@font/black_ops_one"
         android:paddingStart="@dimen/pad_normal"
         android:paddingTop="@dimen/pad_normal"
-        android:text="@string/skullhead_radio"
+        android:text="@string/search_station"
         android:textColor="@color/white"
         android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.app.Application
+import android.icu.text.SimpleDateFormat
+import android.icu.util.TimeZone
 import android.media.MediaPlayer
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
@@ -18,6 +20,9 @@ import com.example.skullheadradio.datamodels.Station
 import com.example.skullheadradio.remote.LautFmApiService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.Duration
+import java.util.Date
+import kotlin.time.toDuration
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -31,8 +36,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val stations: LiveData<List<Station>>
         get() = repo.stations
 
-    val currentSong: LiveData<Song?>
-        get() = repo.currentSong
+    private var _marqueeText = MutableLiveData<String>( "No station selected")
+    val marqueeText: LiveData<String>
+        get() = _marqueeText
 
     private var _currentStation = MutableLiveData<Station?>()
     val currentStation: LiveData<Station?>
@@ -49,7 +55,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentStations: LiveData<List<Station>>
         get() = _currentStationList
 
+    private var _currentSong = MutableLiveData<Song?>()
+    val currentSong: LiveData<Song?>
+            get() = _currentSong
 
+    val nextArtist: LiveData<String>
+        get() = repo.nextArtist
     fun isPlayingRadio(): Boolean{
         return  player.isPlaying
     }
@@ -114,6 +125,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             repo.lastStation = _currentStation.value
         }
         _currentStation.value = station
+        startMarqueeTextUpdate()
     }
 
     fun play(){
@@ -175,6 +187,48 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun startMarqueeTextUpdate(){
+        if (currentStation.value == null){
+            marqueeText.value
+        }else{
+            viewModelScope.launch {
+                repo.getCurrentSong(currentStation.value!!.name)
+                delay(1000)
+                val song = repo.currentSong
+                _currentSong.value = song
+                var newMarqueeTextString = getApplication<Application>().applicationContext.getString(R.string.now_playing) + song?.title + " - " + song?.artist?.name + "     ***     "
+                if(nextArtist.value!!.isNotEmpty()){
+                    newMarqueeTextString = newMarqueeTextString + getApplication<Application>().applicationContext.getString(R.string.next_artist) + nextArtist.value + "    ***    "
+                }
+                newMarqueeTextString = newMarqueeTextString + currentStation.value!!.display_name + "   " + currentStation.value!!.description + "     ***     "
+                _marqueeText.value = newMarqueeTextString
+                try {
+                    delay(compareTime(song!!.ends_at))
+                    startMarqueeTextUpdate()
+                }catch (e: Exception) {
+                    println(song)
+                }
+            }
+        }
+    }
+
+    fun compareTime(endTime: String): Long{
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")
+        format.timeZone = TimeZone.getTimeZone("UTC")
+
+        val currentTime = Date()
+        val songEndTime = format.parse(endTime)
+
+        if(songEndTime != null && songEndTime.after(currentTime)){
+            var duration = songEndTime.time  - currentTime.time
+            duration += 500
+            return duration
+        }else{
+            //if the end_time string from currentSong is invalid this will restart marqueeTextUpdate in a minute
+            return 60000
+        }
+    }
+
     fun restartRadio(){
         val volumeAnimator = ValueAnimator.ofFloat(0.0f, volume)
         volumeAnimator.duration = 1000
@@ -185,6 +239,4 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         player.start()
         volumeAnimator.start()
     }
-
-
 }
