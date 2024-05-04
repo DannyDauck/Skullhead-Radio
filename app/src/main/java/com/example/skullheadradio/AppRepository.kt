@@ -1,9 +1,7 @@
 package com.example.skullheadradio
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.skullheadradio.datamodels.Artist
 import com.example.skullheadradio.datamodels.Genre
 import com.example.skullheadradio.datamodels.Song
 import com.example.skullheadradio.datamodels.Station
@@ -25,10 +23,6 @@ class AppRepository(
     private var _stations = MutableLiveData<List<Station>>()
     val stations: LiveData<List<Station>>
         get() = _stations
-
-    private var _marqueeTextUpdate = MutableLiveData(" ")
-    val  marqueeText: LiveData<String>
-        get() = _marqueeTextUpdate
 
     private var _nextArtist = MutableLiveData("")
     val nextArtist: LiveData<String>

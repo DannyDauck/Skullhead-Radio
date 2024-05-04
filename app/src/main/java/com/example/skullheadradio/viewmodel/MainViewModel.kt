@@ -29,6 +29,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var repo: AppRepository = AppRepository(LautFmApiService.LautFmApi)
     private var player = MediaPlayer()
 
+
+
     var volume: Float = 0.8F
     var genreFilterString = ""
     var allGenres = listOf<Genre>()
@@ -61,6 +63,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val nextArtist: LiveData<String>
         get() = repo.nextArtist
+
+    //Die Integer ist notwendig um zu überprüfen ob im HomeScreen mehrfach hintereinander volumeUp/volumeDown gedrückt wurde,
+    //sonst würden sich die Timer kreuzen, die die Visibility wieder auf 0 setzten
+    private var _volumeViewIsVisible = MutableLiveData(0)
+    val volumeViewIsVisible: LiveData<Int>
+        get() = _volumeViewIsVisible
+
+
+
     fun isPlayingRadio(): Boolean{
         return  player.isPlaying
     }
@@ -166,7 +177,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     }
 
-    fun pause(view: ImageView) {
+    fun pause(view: ImageView?) {
         player?.let { currentPlayer ->
             if (currentPlayer.isPlaying) {
                 val volumeAnimator = ValueAnimator.ofFloat(volume, 0.0f)
@@ -180,7 +191,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     override fun onAnimationEnd(animation: Animator) {
                         currentPlayer.pause()
                         volumeAnimator.removeAllListeners()
-                        view.setImageResource(R.drawable.play)
+                        if(view!=null) {
+                            view?.setImageResource(R.drawable.play)
+                        }
                     }
                 })
             }
@@ -208,6 +221,30 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }catch (e: Exception) {
                     println(song)
                 }
+            }
+        }
+    }
+
+    fun volumeUo(){
+        if (volume < 1.0f){
+            volume += 0.1f
+            player.setVolume(volume, volume)
+            _volumeViewIsVisible.value = _volumeViewIsVisible.value?.plus(1)
+            viewModelScope.launch {
+                delay(1000)
+                _volumeViewIsVisible.value = _volumeViewIsVisible.value?.minus(1)
+            }
+        }
+    }
+
+    fun volumeDown(){
+        if (volume > 0f){
+            volume -= 0.1f
+            player.setVolume(volume, volume)
+            _volumeViewIsVisible.value = _volumeViewIsVisible.value?.plus(1)
+            viewModelScope.launch {
+                delay(1000)
+                _volumeViewIsVisible.value = _volumeViewIsVisible.value?.minus(1)
             }
         }
     }

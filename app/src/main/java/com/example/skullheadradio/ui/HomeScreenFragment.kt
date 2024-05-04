@@ -15,6 +15,7 @@ import com.example.skullheadradio.R
 import com.example.skullheadradio.databinding.FragmentHomeScreenBinding
 import com.example.skullheadradio.tools.SongProgressbarHandler
 import com.example.skullheadradio.viewmodel.MainViewModel
+import kotlin.math.roundToInt
 
 class HomeScreenFragment: Fragment() {
 
@@ -39,14 +40,42 @@ class HomeScreenFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        //first move out the media controll view and then check if there is a station and move it in if is
+        bnd.homeScreenFragmentMediaControll.translationY = 200f
+        bnd.hoemScreenVolumeViewFg.scaleX = vm.volume
+        bnd.hoemScreenVolumeViewFg.scaleY = vm.volume
+        bnd.hoemScreenVolumeViewFgStroke.scaleY = vm.volume
+        bnd.hoemScreenVolumeViewFgStroke.scaleX = vm.volume
+
         if(vm.currentStation.value == null){
             bnd.homeScreenNoRadioSelectedTxt.isVisible = true
             bnd.homeScreenStationContainer.isVisible = false
+
         }else{
             bnd.homeScreenNoRadioSelectedTxt.isVisible = false
             bnd.homeScreenStationContainer.isVisible = true
             bnd.marqueeText.text = vm.marqueeText.value
             bnd.marqueeText.isSelected = true
+            bnd.homeScreenFragmentMediaControll.animate()
+                .translationY(0F)
+                .setDuration(800)
+                .start()
+        }
+
+        if(vm.isPlayingRadio()){
+            bnd.homeScreenPlayBtnPlayImage.setImageResource(R.drawable.pause_uncircled)
+        }else{
+            bnd.homeScreenPlayBtnPlayImage.setImageResource(R.drawable.play_uncircled)
+        }
+
+        bnd.hooemScreenPlayBtn.setOnClickListener {
+            if(vm.isPlayingRadio()){
+                vm.pause(null)
+                bnd.homeScreenPlayBtnPlayImage.setImageResource(R.drawable.play_uncircled)
+            }else{
+                bnd.homeScreenPlayBtnPlayImage.setImageResource(R.drawable.pause_uncircled)
+                vm.restartRadio()
+            }
         }
 
         if(vm.currentSong.value != null){
@@ -101,6 +130,40 @@ class HomeScreenFragment: Fragment() {
         }
         bnd.homeScreenSearch.setOnClickListener {
             findNavController().navigate(HomeScreenFragmentDirections.actionHomeScreenFragmentToSearchScreenFragment())
+        }
+
+        bnd.homeScreenVolumeUp.setOnClickListener {
+            vm.volumeUo()
+        }
+
+        bnd.homeScreenVolumeDown.setOnClickListener{
+            vm.volumeDown()
+        }
+
+        vm.volumeViewIsVisible.observe(viewLifecycleOwner){
+            if(it == 0){
+                bnd.homeScreenVolumeViewBg.isVisible = false
+                bnd.hoemScreenVolumeViewFg.isVisible = false
+                bnd.homeScreenVolumeTxt.isVisible = false
+                bnd.hoemScreenVolumeViewFgStroke.isVisible = false
+            }else{
+                bnd.homeScreenVolumeViewBg.isVisible = true
+                bnd.hoemScreenVolumeViewFg.isVisible = true
+                bnd.hoemScreenVolumeViewFgStroke.isVisible = true
+                bnd.homeScreenVolumeTxt.isVisible = true
+                var newVolume = (vm.volume * 100).roundToInt()
+                bnd.homeScreenVolumeTxt.text = "Volume\n" + newVolume.toString() + "%"
+                bnd.hoemScreenVolumeViewFg.animate()
+                    .scaleX(vm.volume)
+                    .scaleY(vm.volume)
+                    .setDuration(300)
+                    .start()
+                bnd.hoemScreenVolumeViewFgStroke.animate()
+                    .scaleX(vm.volume)
+                    .scaleY(vm.volume)
+                    .setDuration(300)
+                    .start()
+            }
         }
     }
 }
