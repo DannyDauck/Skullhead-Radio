@@ -12,4 +12,5 @@
     <string name="search_station">Sender suchen</string>
     <string name="genres">Genres</string>
     <string name="next_artist">"danach:    "</string>
+    <string name="save_station">Sender speichern</string>
 </resources>

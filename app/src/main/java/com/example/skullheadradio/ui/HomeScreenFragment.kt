@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -31,21 +30,23 @@ class HomeScreenFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bnd = FragmentHomeScreenBinding.inflate(inflater, container, false)
         vm.getAllGenres()
         vm.startMarqueeTextUpdate()
         return bnd.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        //first move out the media controll view and then check if there is a station and move it in if is
+        //first move out the media control view and then check if there is a station and move it in if is
         bnd.homeScreenFragmentMediaControll.translationY = 200f
         bnd.hoemScreenVolumeViewFg.scaleX = vm.volume
         bnd.hoemScreenVolumeViewFg.scaleY = vm.volume
         bnd.hoemScreenVolumeViewFgStroke.scaleY = vm.volume
         bnd.hoemScreenVolumeViewFgStroke.scaleX = vm.volume
+
 
         if(vm.currentStation.value == null){
             bnd.homeScreenNoRadioSelectedTxt.isVisible = true
@@ -84,13 +85,9 @@ class HomeScreenFragment: Fragment() {
             bnd.homeScreenCurrentSongArtist.text = song.artist.name
             bnd.homeScreenCurrentSongAlbum.text = song.album
             bnd.homeScreenCurrentSongReleaseYear.text = song.releaseyear
+            bnd.marqueeText.isSelected = true
             val progressbarHandler = SongProgressbarHandler()
             progressbarHandler.generateProgressView(bnd.homeScreenCurrentSongProgress, bnd.homeScreenCurrentSongRemainTime, bnd.homeScreenCurrentSongElapsedTime, song.started_at, song.ends_at, requireContext())
-        }
-
-        vm.marqueeText.observe(viewLifecycleOwner){
-            bnd.marqueeText.text = vm.marqueeText.value
-            bnd.marqueeText.isSelected = true
         }
 
         vm.currentStation.observe(viewLifecycleOwner){
@@ -100,7 +97,7 @@ class HomeScreenFragment: Fragment() {
                 bnd.homeScreenStationGenres.text = station.genres.joinToString(separator = ", ")
                 bnd.homeScreenStationLocation.text = station.location
                 if(station.current_playlist != null) {
-                    bnd.homeScreenPlaylistname.text = station.current_playlist?.name
+                    bnd.homeScreenPlaylistname.text = station.current_playlist.name
                     if (station.current_playlist.description != null) {
                         bnd.homeScreenPlaylistDescription.text =
                             station.current_playlist.description
@@ -140,6 +137,13 @@ class HomeScreenFragment: Fragment() {
             vm.volumeDown()
         }
 
+        vm.marqueeText.observe(viewLifecycleOwner){
+            bnd.marqueeText.text = vm.marqueeText.value
+            bnd.marqueeText.isSelected = true
+        }
+
+
+
         vm.volumeViewIsVisible.observe(viewLifecycleOwner){
             if(it == 0){
                 bnd.homeScreenVolumeViewBg.isVisible = false
@@ -151,8 +155,8 @@ class HomeScreenFragment: Fragment() {
                 bnd.hoemScreenVolumeViewFg.isVisible = true
                 bnd.hoemScreenVolumeViewFgStroke.isVisible = true
                 bnd.homeScreenVolumeTxt.isVisible = true
-                var newVolume = (vm.volume * 100).roundToInt()
-                bnd.homeScreenVolumeTxt.text = "Volume\n" + newVolume.toString() + "%"
+                val newVolume = (vm.volume * 100).roundToInt()
+                bnd.homeScreenVolumeTxt.text = "Volume\n$newVolume%"
                 bnd.hoemScreenVolumeViewFg.animate()
                     .scaleX(vm.volume)
                     .scaleY(vm.volume)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.HomeScreenFragment">
 
     <ImageView
@@ -12,225 +12,255 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/skullheadimage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@color/bg_overlay"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/homeTopbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@drawable/topbar_bg"
         android:fontFamily="@font/black_ops_one"
+        android:paddingStart="@dimen/pad_normal"
+        android:paddingTop="@dimen/pad_normal"
         android:text="@string/skullhead_radio"
         android:textColor="@color/white"
         android:textSize="32dp"
-        android:paddingTop="@dimen/pad_normal"
-        android:paddingStart="@dimen/pad_normal"
-        android:background="@drawable/topbar_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/marquee_text"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/marque_txt_bg"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:fontFamily="@font/black_ops_one"
+        android:gravity="center_vertical"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="no radio is playing"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeTopbar"
+        tools:ignore=",HardcodedText,TextSizeCheck" />
 
     <LinearLayout
         android:id="@+id/home_screen_station_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/home_bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeTopbar"
-        app:layout_constraintBottom_toTopOf="@id/home_bottom_nav">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/marquee_text">
 
-        <TextView
-            android:id="@+id/marquee_text"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/marque_txt_bg"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:fontFamily="@font/black_ops_one"
-            android:gravity="center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp"
-            android:scrollHorizontally="true"
-            android:layout_margin="20dp"
-            android:singleLine="true"
-            android:text="no radio is playing"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            tools:ignore=",HardcodedText,TextSizeCheck"
-            app:layout_constraintTop_toBottomOf="@id/homeTopbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="8dp">
-            <ImageView
-                android:id="@+id/home_screen_station_image"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/rastafariskullhead" />
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/home_screen_station_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/rastafariskullhead"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/home_screen_stationname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textAlignment="textStart"
-                    android:fontFamily="@font/black_ops_one"
-                    android:textColor="@color/black"
-                    android:text="Station name station name"
                     android:background="#99FFFFFF"
-                    android:paddingStart="8dp"
+                    android:fontFamily="@font/black_ops_one"
                     android:lines="2"
-                    tools:ignore="hardcoded text"/>
+                    android:paddingStart="8dp"
+                    android:text="Station name station name"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    tools:ignore="hardcoded text" />
+
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"/>
+                    android:layout_height="2dp" />
+
                 <TextView
                     android:id="@+id/home_screen_station_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="station location station location"
-                    android:fontFamily="@font/black_ops_one"
-                    android:textSize="20sp"
                     android:background="#66FFFFFF"
+                    android:fontFamily="@font/black_ops_one"
                     android:lines="2"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:text="station location station location"
+                    android:textSize="20sp" />
+
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"/>
+                    android:layout_height="2dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/genres"
-                    android:textSize="18sp"
+                    android:background="#66FFFFFF"
                     android:fontFamily="@font/black_ops_one"
                     android:paddingStart="8dp"
-                    android:background="#66FFFFFF"/>
+                    android:text="@string/genres"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/home_screen_station_genres"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:background="#66FFFFFF"
+                    android:lines="3"
                     android:paddingStart="8dp"
                     android:paddingBottom="4dp"
-                    android:lines="3"
                     android:text="station genres genres genres genres genres genres genres genres genres"
-                    tools:ignore="hardcoded text"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="hardcoded text" />
 
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/home_screen_playlistcontainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#77FFFFFF"
-            android:orientation="vertical"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:background="#77FFFFFF"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/home_screen_playlistname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="8dp"
                 android:text="current playlist"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:paddingStart="8dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/home_screen_playlist_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="current playlist description"
-                android:textSize="20sp"
+                android:layout_marginBottom="4dp"
                 android:paddingStart="8dp"
-                android:layout_marginBottom="4dp"/>
+                android:text="current playlist description"
+                android:textSize="20sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/home_screen_current_song_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                android:paddingStart="8dp"
                 android:text="currentSong"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:paddingStart="8dp"
-                android:background="#77FFFFFF"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/home_screen_current_song_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                android:paddingStart="8dp"
                 android:text="current_song_artist"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:paddingStart="8dp"
-                android:background="#77FFFFFF"
-                tools:ignore="hardcoded text"/>
+                tools:ignore="hardcoded text" />
+
             <TextView
                 android:id="@+id/home_screen_current_song_album"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                android:paddingStart="8dp"
                 android:text="current_song_album"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:paddingStart="8dp"
-                android:background="#77FFFFFF"
-                tools:ignore="hardcoded text"/>
+                tools:ignore="hardcoded text" />
+
             <TextView
                 android:id="@+id/home_screen_current_song_release_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#77FFFFFF"
+                android:paddingStart="8dp"
                 android:text="current_song_release_year"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:paddingStart="8dp"
-                android:background="#77FFFFFF"
-                tools:ignore="hardcoded text"/>
+                tools:ignore="hardcoded text" />
 
             <SeekBar
                 android:id="@+id/home_screen_current_song_progress"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:background="#77FFFFFF"
-                android:thumb="@drawable/song_progress_thumb"
-                android:progress="50"
+                android:paddingStart="8dp"
                 android:paddingLeft="20dp"
+                android:paddingEnd="8dp"
                 android:paddingRight="20dp"
-                />
+                android:progress="50"
+                android:thumb="@drawable/song_progress_thumb" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,92 +271,100 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="elapsed time"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textAlignment="textStart"
                     android:background="#77FFFFFF"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:paddingBottom="4dp"/>
+                    android:paddingBottom="4dp"
+                    android:text="elapsed time"
+                    android:textAlignment="textStart"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/home_screen_current_song_remain_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="remain time"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textAlignment="textEnd"
                     android:background="#77FFFFFF"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:paddingBottom="4dp"/>
+                    android:paddingBottom="4dp"
+                    android:text="remain time"
+                    android:textAlignment="textEnd"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/home_screen_fragment_media_controll"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/home_screen_media_controll_bg"
         app:layout_constraintBottom_toTopOf="@id/home_bottom_nav"
-        android:background="@drawable/home_screen_media_controll_bg">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <LinearLayout
             android:id="@+id/hooem_screen_play_btn"
             android:layout_width="62dp"
             android:layout_height="62dp"
-            android:background="@drawable/play_btn_standard"
-            android:padding="4dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="40dp">
+            android:background="@drawable/play_btn_standard"
+            android:padding="4dp">
+
             <ImageView
                 android:id="@+id/home_screen_play_btn_play_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/play_uncircled"/>
+                android:src="@drawable/play_uncircled" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/home_screen_record_btn"
             android:layout_width="62dp"
             android:layout_height="62dp"
-            android:background="@drawable/play_btn_standard"
-            android:padding="6dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="20dp">
+            android:background="@drawable/play_btn_standard"
+            android:padding="6dp">
+
             <TextView
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:text="REC"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:background="@drawable/record"
-                android:paddingTop="15dp"/>
+                android:paddingTop="15dp"
+                android:text="REC"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
         <ImageView
-            android:layout_marginTop="4dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/speaker"/>
-        <ImageView
             android:layout_marginTop="4dp"
+            android:src="@drawable/speaker" />
+
+        <ImageView
             android:id="@+id/home_screen_volume_up"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/plus"/>
-        <ImageView
             android:layout_marginTop="4dp"
+            android:src="@drawable/plus" />
+
+        <ImageView
             android:id="@+id/home_screen_volume_down"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/minus"/>
+            android:layout_marginTop="4dp"
+            android:src="@drawable/minus" />
 
     </LinearLayout>
 
@@ -349,24 +387,25 @@
         android:id="@+id/home_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/bottombar_bg"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <ImageView
             android:id="@+id/home_screen_search"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_weight="1"
             android:layout_marginTop="6dp"
-            android:src="@drawable/search"/>
+            android:layout_weight="1"
+            android:src="@drawable/search" />
+
         <ImageView
             android:id="@+id/home_screen_home"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_weight="1"
             android:layout_marginTop="6dp"
+            android:layout_weight="1"
             android:src="@drawable/radio"
             app:tint="@color/active" />
     </LinearLayout>
@@ -376,46 +415,49 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/record"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tint="#dd888888"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#dd888888" />
+
     <ImageView
         android:id="@+id/hoem_screen_volume_view_fg_stroke"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@drawable/record"
-        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
         app:layout_constraintBottom_toBottomOf="@id/home_screen_volume_view_bg"
         app:layout_constraintEnd_toEndOf="@id/home_screen_volume_view_bg"
+        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
         app:layout_constraintTop_toTopOf="@id/home_screen_volume_view_bg"
-        app:tint="@color/black"/>
+        app:tint="@color/black" />
+
     <ImageView
         android:id="@+id/hoem_screen_volume_view_fg"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:src="@drawable/record"
         android:padding="4dp"
-        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
+        android:src="@drawable/record"
         app:layout_constraintBottom_toBottomOf="@id/home_screen_volume_view_bg"
         app:layout_constraintEnd_toEndOf="@id/home_screen_volume_view_bg"
+        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
         app:layout_constraintTop_toTopOf="@id/home_screen_volume_view_bg"
-        app:tint="@color/smooth_gold"/>
+        app:tint="@color/smooth_gold" />
+
     <TextView
         android:id="@+id/home_screen_volume_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="volume"
-        android:textStyle="bold"
-        android:textSize="24dp"
-        android:textAlignment="center"
         android:fontFamily="@font/black_ops_one"
+        android:text="volume"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
+        android:textSize="24dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/home_screen_volume_view_bg"
         app:layout_constraintEnd_toEndOf="@id/home_screen_volume_view_bg"
-        app:layout_constraintTop_toTopOf="@id/home_screen_volume_view_bg"/>
+        app:layout_constraintStart_toStartOf="@id/home_screen_volume_view_bg"
+        app:layout_constraintTop_toTopOf="@id/home_screen_volume_view_bg" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
