@@ -46,9 +46,9 @@ class GenreAdapter(
         if(vm.genreFilterString.isNotEmpty()) {
             data = vm.allGenres.filter {
                 it.name.lowercase().contains(vm.genreFilterString.lowercase())
-            }
+            }.sortedBy { vm.currentGenres.value?.contains(it)==false }
         }else{
-            data = vm.allGenres
+            data = vm.allGenres.sortedBy { vm.currentGenres.value?.contains(it)==false }
         }
         notifyDataSetChanged()
     }

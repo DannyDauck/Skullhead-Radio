@@ -50,6 +50,27 @@ class AppRepository(
         }
     }
 
+    suspend fun getStationsByLetter(letter: String){
+        try{
+            val response = lautFmApi.retrofitService.getStationsByLetter(letter.lowercase())
+            if(response.isSuccessful){
+                try{
+                    _stations.value = response.body()
+                }catch(e: Exception){
+                    println(e)
+                    println("error while catching stations by name")
+                }
+            }else{
+                val errorCode = response.code()
+                val errorMessage = response.message()
+                println("Api respons: "+ errorCode.toString() + errorMessage.toString())
+            }
+        }catch (e: Exception){
+            println(">>> API Repsoitory:")
+            println(e)
+        }
+    }
+
     suspend fun getAllGenres(){
         try {
             genres = lautFmApi.retrofitService.getAllGenres()

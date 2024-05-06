@@ -52,6 +52,8 @@ interface LautFmApiService {
         @Header("If-Modified-Since") ifModifiedSince: String? = null
     ): Response<List<Station>>
 
+    @GET("/stations/letter/{letter}")
+    suspend fun getStationsByLetter(@Path("letter") letter: String):Response<List<Station>>
 
     object LautFmApi {
         val retrofitService: LautFmApiService by lazy { retrofit.create(LautFmApiService::class.java) }

@@ -27,37 +27,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
+
+
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/searchTopbar"
+        app:layout_constraintBottom_toTopOf="@id/search_bottom_nav"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/search_bottom_nav">
+        app:layout_constraintTop_toBottomOf="@id/searchTopbar"
+        tools:visibility="visible">
+
         <LinearLayout
+            android:id="@+id/searchScreen_btn_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/search_screen_btn_genre"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="@string/genre"
                 android:layout_weight="1"
-                android:textSize="32sp"
+                android:background="#88FFFFFF"
+                android:text="@string/genre"
                 android:textAlignment="center"
-                android:background="#88FFFFFF"/>
+                android:textSize="32sp" />
+
             <TextView
                 android:id="@+id/search_screen_btn_name"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
+                android:background="#88FFFFFF"
                 android:text="@string/name"
-                android:textSize="32sp"
                 android:textAlignment="center"
-                android:background="#88FFFFFF"/>
+                android:textSize="32sp" />
 
         </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_station"
@@ -73,6 +83,9 @@
             tools:listitem="@layout/station_item" />
 
     </LinearLayout>
+
+
+
 
 
     <TextView
@@ -101,6 +114,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchTopbar">
+        <!-- Empty view to to keep the textField below in right place-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+        <EditText
+            android:id="@+id/search_it_name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/marque_txt_bg"
+            android:hint="Name"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="#555555"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/searchscreen_bg"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchTopbar" />
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_screen_genre_container"
         android:layout_width="match_parent"
@@ -108,7 +151,8 @@
         app:layout_constraintBottom_toTopOf="@id/search_screen_close_big_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchTopbar">
+        app:layout_constraintTop_toBottomOf="@+id/searchTopbar"
+        tools:visibility="invisible">
 
 
         <LinearLayout
@@ -116,8 +160,8 @@
             android:layout_height="0dp"
             android:background="@color/container_bg"
             android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -162,11 +206,12 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/black"
                     android:hint="@string/genre"
-                    android:inputType="textEmailAddress"
                     android:minHeight="48dp"
                     android:textColor="@color/black"
                     android:textColorHint="#444444"
                     android:textSize="16dp" />
+
+
 
             </LinearLayout>
 
@@ -215,6 +260,8 @@
             android:src="@drawable/radio"
             app:tint="@color/white" />
     </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/search_screen_close_big_btn"

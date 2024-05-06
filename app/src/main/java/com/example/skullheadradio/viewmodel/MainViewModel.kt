@@ -33,6 +33,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     var volume: Float = 0.8F
     var genreFilterString = ""
+    var nameFilterString = ""
+    var isOnSearch = false
     var allGenres = listOf<Genre>()
 
     val stations: LiveData<List<Station>>
@@ -275,5 +277,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
         player.start()
         volumeAnimator.start()
+    }
+
+    fun getStationsByName(){
+        if(nameFilterString.isEmpty()){
+            clearCurrentStations()
+        }else {
+            viewModelScope.launch {
+                isOnSearch = true
+                repo.getStationsByLetter(nameFilterString.lowercase().first().toString())
+                delay(1000)
+                _currentStationList.value = repo.stations.value
+                isOnSearch = false
+            }
+        }
+    }
+
+    fun clearCurrentStations(){
+        viewModelScope.launch {
+            //if you delete the second letter an then delete the first fast after it,
+            //the viewModelScope which starts the search for radio stations by letter
+            //is still running end will set stations again after clear the stations,
+            //thats why inserted a delay
+            if (isOnSearch){
+                delay(1000)
+            }
+            _currentStationList.value = emptyList()
+        }
+
     }
 }

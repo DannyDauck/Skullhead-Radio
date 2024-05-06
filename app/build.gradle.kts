@@ -82,4 +82,11 @@ dependencies {
 
     //Gson
     implementation ("com.google.code.gson:gson:2.8.9")
+
+    //Giraffe
+    /*
+    implementation ("com.github.tcking:giraffez:1.0.3")
+    implementation ("com.github.tcking:giraffez-libmp3lame:1.0.3")
+     */
+
 }

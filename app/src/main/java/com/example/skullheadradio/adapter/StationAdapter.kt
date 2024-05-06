@@ -75,6 +75,9 @@ class StationAdapter(
             println("stations was empty")
             data = listOf()
         }
+        if (vm.nameFilterString.isNotEmpty()){
+            data = data.filter { it.name.lowercase().contains(vm.nameFilterString.lowercase()) }
+        }
         notifyDataSetChanged()
     }
 
