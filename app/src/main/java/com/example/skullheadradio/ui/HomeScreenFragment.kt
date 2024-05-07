@@ -19,7 +19,6 @@ import kotlin.math.roundToInt
 class HomeScreenFragment: Fragment() {
 
     private lateinit var bnd: FragmentHomeScreenBinding
-    private var player: MediaPlayer? = null
     private val vm: MainViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
